@@ -3,7 +3,6 @@
 
 // variables
 var inquirer = require('inquirer');
-var letter = require('./Letter.js');
 var word = require('./Word.js');
 var letters = [];
 // functions
@@ -14,11 +13,13 @@ function newLetter(){
         message: "Guess a letter in the word I'm thinking of:"}
 
     ]).then(function(data){
-          if (data.letterGuess == indexOf(letters)) {
+          if (data.letterGuess == letters) {
           	console.log("You already guessed that letter! Try again!");
           	newLetter();
           }else{
-
+            letters.push(data.letterGuess)
+            console.log(letters)
+            newLetter();
           }
     });
 }
