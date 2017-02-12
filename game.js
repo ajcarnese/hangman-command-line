@@ -1,40 +1,29 @@
-// Hangman game
+var inquirer = require('inquirer')
+var Word = require('./Word.js');
 
+var words = ['jeff', 'john', 'rhyna'];
 
-// variables
-var inquirer = require('inquirer');
-var word = require('./Word.js');
-var letters = [];
-// functions
-function newLetter(){
+var wordToPlay = words[Math.floor(Math.random()*words.length)];
+
+var wordObject = new Word(wordToPlay);
+wordObject.makeAndPushLettersIntoWord();
+console.log(wordObject.display());
+
+function askLetter(){
     inquirer.prompt([
-      {type: "input",
-        name: "letterGuess",
-        message: "Guess a letter in the word I'm thinking of:"}
-
+    {
+    type: "input",
+    name: "guess",
+    message: "What letter do you guess? If you are done then say no."},
     ]).then(function(data){
-          if (data.letterGuess == letters) {
-          	console.log("You already guessed that letter! Try again!");
-          	newLetter();
-          }else{
-            letters.push(data.letterGuess)
-            console.log(letters)
-            newLetter();
-          }
+        if (data.guess != 'no') {
+            wordObject.updateLetter(data.guess);
+
+            console.log(wordObject.display());
+
+            askLetter();
+        }
     });
 }
 
-//1. Show directions. 
-console.log("Hangman has begun!")
-console.log("Guess a letter in the word I'm thinking of before your chances run out!")
-
-//2. prompt for a letter. (if letter was already guessed, have them guess again with no turn penalty.)
-newLetter();
-
-//3. if letter is correct, fill in blanks associated.  (indicate letters guessed already?)
-
-//4. if letter is incorrect, indicate how many chances left.
-
-//5. if word is filled in, display "Winner!" and give prompt to play again.
-
-//6. if chances run out before the user guesses the word, "Game over!"
+askLetter();
