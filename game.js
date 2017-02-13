@@ -1,12 +1,18 @@
 var inquirer = require('inquirer')
 var Word = require('./Word.js');
 
-var words = ['jeff', 'john', 'rhyna'];
-
+var words = ['javascript', 'bootstrap', 'node'];
 var wordToPlay = words[Math.floor(Math.random()*words.length)];
+var attempts = 0;
+
+//welcome message
+console.log(' ')
+console.log('Welcome to the easiest Hangman game ever!')
+console.log('(where the hangman is too lazy to count your chances!)')
+console.log("")
 
 var wordObject = new Word(wordToPlay);
-wordObject.makeAndPushLettersIntoWord();
+wordObject.parseWord();
 console.log(wordObject.display());
 
 function askLetter(){
@@ -14,16 +20,26 @@ function askLetter(){
     {
     type: "input",
     name: "guess",
-    message: "What letter do you guess? If you are done then say no."},
+    message: "Try to guess a letter from the word above. If you are done then type 'i-win'."},
     ]).then(function(data){
-        if (data.guess != 'no') {
+        // for (var i=0; i<this.wordObject.length; i++){
+        //     if 
+        if (data.guess != 'i-win') {
             wordObject.updateLetter(data.guess);
 
             console.log(wordObject.display());
 
             askLetter();
+        }else{
+            console.log("   ")
+            console.log("********************************")
+            console.log ('Winner winner chicken dinner!')
+            console.log("********************************")
         }
     });
 }
 
+
+console.log("  ")
+console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 askLetter();

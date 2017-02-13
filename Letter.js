@@ -4,7 +4,7 @@ function Letter(letter){
 	this.display = function(){
 		//if found is true, the return the letter, otherwise show a blank
 		if (this.found) return " " + this.letter + " ";
-		else return ' _ ';
+		else return ' __ ';
 	}
 }
 
